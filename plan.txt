@@ -1,0 +1,591 @@
+# 3-Month Internal Red Team Capability Development
+
+**Objective**
+
+Build an enterprise-ready Internal Red Team capable of delivering penetration testing and Red Team engagements using **CyberStrike** as the primary offensive platform while understanding the underlying attack techniques.
+
+---
+
+# Week 1 — Lab Deployment & Standardization
+
+## Goal
+
+Every engineer has an identical enterprise lab ready for the remaining 11 weeks.
+
+### Deploy Infrastructure
+
+**Attacker**
+- Kali Linux
+- CyberStrike
+- OpenCode
+- Git
+- Docker
+- VSCode
+
+**Windows**
+- Windows Server 2022
+- Active Directory Domain Services
+- corp.local
+- DNS
+
+**Clients**
+- Windows 11 Client #1
+- Windows 11 Client #2
+
+**Servers**
+- Windows Member Server
+- Ubuntu Server
+
+### Deploy Applications
+
+- OWASP Juice Shop
+- Yavuzlar VulnLab
+- DVWA (optional)
+
+### Configure CyberStrike
+
+Configure
+
+- Preferred LLM
+- OpenCode
+- Workspace
+- Prompt Library
+- Report Templates
+
+### Validation
+
+Every engineer must verify
+
+- CyberStrike launches
+- Can connect to LLM
+- AD reachable
+- Juice Shop reachable
+- VulnLab reachable
+
+### Deliverables
+
+- Standardized Lab
+- Working CyberStrike
+- Shared Documentation
+
+---
+
+# Week 2 — Reconnaissance & Asset Discovery
+
+## Goal
+
+Produce a professional Reconnaissance Report.
+
+### Manual Foundation
+
+Run
+
+```bash
+nmap -sV -sC <target>
+```
+
+Learn
+
+- Port Scanning
+- Service Detection
+- Version Detection
+
+Run
+
+```bash
+rustscan -a <target>
+```
+
+Compare results.
+
+### CyberStrike
+
+**Agent**
+
+`cyberstrike`
+
+Prompt
+
+```
+Perform reconnaissance against the target network.
+
+Identify:
+
+- Live hosts
+- Open ports
+- Running services
+- Technologies
+- Initial attack vectors
+
+Generate an executive and technical summary.
+```
+
+Engineer validates findings.
+
+### Deliverables
+
+- Recon Report
+- Recon Playbook
+- Prompt Library v1
+
+---
+
+# Week 3 — Active Directory Assessment
+
+## Goal
+
+Assess an enterprise Active Directory environment.
+
+### Manual Foundation
+
+Run
+
+SharpHound
+
+Import into BloodHound.
+
+Learn
+
+- Attack Paths
+- High Value Targets
+- ACLs
+- Domain Admin relationships
+
+### CyberStrike
+
+**Agent**
+
+`internal-network`
+
+Prompt
+
+```
+Assess the Active Directory environment.
+
+Identify:
+
+- Privileged accounts
+- Kerberoast opportunities
+- AS-REP Roast
+- Weak ACLs
+- Delegation issues
+- Privilege escalation paths
+
+Generate remediation recommendations.
+```
+
+Validate every finding manually.
+
+### Deliverables
+
+- AD Security Assessment
+- Attack Path Diagram
+- AD Playbook
+
+---
+
+# Week 4 — Web Application Assessment
+
+## Goal
+
+Perform an OWASP-style web application assessment.
+
+### Manual Foundation
+
+Burp Proxy
+
+Practice
+
+- Intercept Request
+- Modify Request
+- Replay Request
+
+Understand
+
+- Cookies
+- Headers
+- Sessions
+
+### CyberStrike
+
+**Agent**
+
+`web-application`
+
+Launch
+
+HackBrowser (Manual Mode)
+
+Prompt
+
+```
+Assess the Yavuzlar VulnLab application.
+
+Map the application.
+
+Discover endpoints.
+
+Identify authentication flow.
+
+Create a testing plan before exploitation.
+```
+
+Then
+
+```
+Execute an OWASP Web Security Assessment.
+
+Prioritize
+
+- Authentication
+- Authorization
+- Input Validation
+- Business Logic
+
+Generate evidence for every confirmed vulnerability.
+```
+
+### Deliverables
+
+- Web Assessment Report
+- Endpoint Inventory
+- Attack Surface Diagram
+
+---
+
+# Week 5 — AI-Assisted Vulnerability Validation
+
+## Goal
+
+Understand how CyberStrike validates vulnerabilities.
+
+### Manual Foundation
+
+Select ONE vulnerability.
+
+Example
+
+SQL Injection.
+
+Demonstrate manually.
+
+Understand why it works.
+
+### CyberStrike
+
+**Agent**
+
+`web-application`
+
+HackBrowser
+
+Autonomous Mode
+
+Prompt
+
+```
+Login using supplied credentials.
+
+Automatically crawl the application.
+
+Capture every endpoint.
+
+Execute all available Proxy Testers.
+
+Only report vulnerabilities confirmed through reproducible evidence.
+
+Generate screenshots and proof-of-concept requests.
+```
+
+Expected CyberStrike Features
+
+- HackBrowser
+- IDOR Tester
+- Authentication Tester
+- Authorization Tester
+- Injection Tester
+- Business Logic Tester
+- SSRF Tester
+- File Attack Tester
+
+Engineer validates every finding.
+
+### Deliverables
+
+- Vulnerability Assessment Report
+- Evidence Pack
+- Validation SOP
+
+---
+
+# Week 6 — Initial Access & Credential Analysis
+
+## Goal
+
+Understand post-compromise activities.
+
+### Manual Foundation
+
+Understand
+
+- Reverse Shell
+- NTLM
+- Kerberos
+- Credential Storage
+
+### CyberStrike
+
+**Agent**
+
+`internal-network`
+
+Prompt
+
+```
+Assess the compromised workstation.
+
+Identify credential material.
+
+Identify privilege escalation opportunities.
+
+Recommend the safest attack chain.
+
+Document every step.
+```
+
+### Deliverables
+
+- Initial Access Report
+- Credential Inventory
+- Privilege Escalation Notes
+
+---
+
+# Week 7 — Lateral Movement
+
+## Goal
+
+Reach the Domain Controller.
+
+### Manual Foundation
+
+Understand
+
+- SMB
+- PsExec
+- WinRM
+- WMI
+
+### CyberStrike
+
+**Agent**
+
+`internal-network`
+
+Prompt
+
+```
+Starting from the compromised workstation,
+
+identify every possible lateral movement path.
+
+Prioritize the safest route to Domain Admin.
+
+Document every authentication event.
+
+Generate a complete attack narrative.
+```
+
+### Deliverables
+
+- Lateral Movement Report
+- Attack Chain Diagram
+
+---
+
+# Week 8 — Threat Intelligence & Vulnerability Prioritization
+
+## Goal
+
+Prioritize discovered vulnerabilities.
+
+### Manual Foundation
+
+Research
+
+- CVE
+- CVSS
+- EPSS
+- CISA KEV
+
+### CyberStrike
+
+**Agent**
+
+`cyberstrike`
+
+Using
+
+- CVE MCP
+- OSINT MCP
+
+Prompt
+
+```
+Analyze all discovered services.
+
+Identify known CVEs.
+
+Rank vulnerabilities using EPSS and CISA KEV.
+
+Recommend remediation priorities.
+
+Generate a management summary.
+```
+
+### Deliverables
+
+- Prioritized Vulnerability Report
+
+---
+
+# Week 9 — Complete Enterprise Assessment
+
+## Goal
+
+Execute a complete internal assessment.
+
+### CyberStrike Workflow
+
+`cyberstrike`
+
+↓
+
+`web-application`
+
+↓
+
+`internal-network`
+
+Scenario
+
+```
+You have been hired to assess corp.local.
+
+Perform reconnaissance.
+
+Assess web applications.
+
+Assess Active Directory.
+
+Identify attack paths.
+
+Generate Executive Report.
+
+Generate Technical Report.
+```
+
+### Deliverables
+
+- End-to-End Security Assessment
+
+---
+
+# Week 10 — Executive Reporting
+
+## Goal
+
+Produce customer-ready deliverables.
+
+### CyberStrike
+
+Use
+
+`cyberstrike`
+
+Prompt
+
+```
+Generate
+
+- Executive Summary
+- Technical Findings
+- MITRE ATT&CK Mapping
+- Remediation Plan
+- Risk Matrix
+
+Produce a customer-ready report.
+```
+
+Engineer reviews and improves wording.
+
+### Deliverables
+
+- Executive Report
+- Technical Report
+- Presentation Deck
+
+---
+
+# Week 11 — Mock Client Engagement
+
+## Goal
+
+Operate exactly like a consulting engagement.
+
+Scenario
+
+Kickoff
+
+↓
+
+Assessment
+
+↓
+
+Status Update
+
+↓
+
+Final Presentation
+
+Rotate roles
+
+- Engagement Lead
+- Internal Operator
+- Web Tester
+- Reporting Lead
+
+Deliverables
+
+- Client Report
+- Executive Presentation
+- Lessons Learned
+
+---
+
+# Week 12 — Production Readiness
+
+## Goal
+
+Validate the team is ready for real engagements.
+
+Scenario
+
+Complete Red Team assessment using CyberStrike.
+
+Use the correct agent for each phase.
+
+- `cyberstrike` → Planning & Recon
+- `web-application` → Web Assessment
+- `internal-network` → Active Directory
+- `cyberstrike` → Report Generation
+
+### Final Deliverables
+
+- Internal Red Team Playbook
+- Prompt Library
+- Assessment SOPs
+- Reporting Templates
+- Service Catalog
+- Production-Ready Internal Red Team

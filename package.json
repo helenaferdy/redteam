@@ -1,0 +1,11 @@
+{
+  "name": "redteam-learning-guide",
+  "version": "1.0.0",
+  "description": "Internal Red Team Capability Development - 12-Week Learning Guide",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

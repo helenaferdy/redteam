@@ -1152,7 +1152,7 @@ Save to workspace/loot/w3/attack_surface_report.md</div>
   </div>  <div class="step-section">
     <span class="step-section-label label-execute">▸ ▸ Execute — Injections</span>
         <div class="code-block">SQLi:    ' OR '1'='1' -- ; " OR "1"="1" --
-XSS:     <script>alert(1)</script> ; "><img src=x onerror=alert(1)>
+XSS:     &lt;script&gt;alert(1)&lt;/script&gt; ; &quot;&gt;&lt;img src=x onerror=alert(1)&gt;
 CmdInj:  ; ls -la ; | whoami ; $(id)
 PathTrv: ../../../../etc/passwd</div>
   </div>  <div class="step-section">

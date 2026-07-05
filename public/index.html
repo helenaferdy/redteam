@@ -732,7 +732,7 @@ docker run -d -p 1337:1337 --name vulnlab yavuzlar/vulnlab</div></li><li>Verify:
     <span class="step-section-label label-goal">▸ Goal</span>
 <p>Understand OpenCode, its subscription ($5 first month, $10/month after), and which LLM to use.</p>
   </div>  <div class="step-section">
-    <span class="step-section-label label-context">▸ ▸ Context</span>
+    <span class="step-section-label label-context">▸ Context</span>
 <p>OpenCode is an open-source AI coding CLI. <strong>OpenCode Go</strong> ($5 first month, $10/month after) includes built-in API key. Recommended model: <strong>DeepSeek V4 Flash</strong> — fast, cheap, handles code generation reliably.</p>
   </div>  <div class="step-section">
     <span class="step-section-label label-execute">▸ ▸ Execute</span>
@@ -756,8 +756,8 @@ opencode --version</div></li><li>Subscribe at opencode.ai/go. Pay $5.</li><li>Ac
     <span class="step-section-label label-goal">▸ Goal</span>
 <p>Connect CyberStrike to your LLM, integrate OpenCode, set up the workspace.</p>
   </div>  <div class="step-section">
-    <span class="step-section-label label-context">▸ ▸ Context</span>
-<p>CyberStrike exposes 7 specialized agents. Each operates in Manual (you drive) or Autonomous (agent runs end-to-end) mode.</p>
+    <span class="step-section-label label-context">▸ Context</span>
+<p>CyberStrike exposes 7 specialized agents.</p>
   </div>  <div class="step-section">
     <span class="step-section-label label-info">▸ ▸ Agent Directory</span>
 <div class="tool-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));"><div class="tool-card"><h4><code>cyberstrike</code></h4><p>General-purpose: recon, planning, reporting.</p></div><div class="tool-card"><h4><code>web-application</code></h4><p>OWASP web testing. Launches HackBrowser for interactive testing.</p></div><div class="tool-card"><h4><code>mobile-application</code></h4><p>Android/iOS app testing. API interception, cert bypass.</p></div><div class="tool-card"><h4><code>cloud-security</code></h4><p>AWS/Azure/GCP auditing. IAM, storage, security groups.</p></div><div class="tool-card"><h4><code>internal-network</code></h4><p>AD operations. BloodHound, Kerberoasting, lateral movement.</p></div><div class="tool-card"><h4><code>proxy-agent</code></h4><p>HTTP traffic analyzer. Auto-delegates to testers.</p></div><div class="tool-card"><h4><code>general</code></h4><p>General-purpose coding. Build tools, parse data, generate payloads.</p></div><div class="tool-card"><h4><code>explore</code></h4><p>Complex research. Codebase exploration, dataset analysis.</p></div></div>
@@ -945,7 +945,7 @@ Save to ~/redteam/workspace/w2/ and serve: python3 -m http.server 8080</div>
     <span class="step-section-label label-goal">▸ Goal</span>
 <p>Build the mental model: a system is vulnerable because it exposes something reachable with a weakness you can exploit.</p>
   </div>  <div class="step-section">
-    <span class="step-section-label label-context">▸ ▸ Context</span>
+    <span class="step-section-label label-context">▸ Context</span>
 <p><strong>Three layers:</strong> Network surface (open ports) → Software surface (apps + versions = CVEs) → Configuration surface (misconfigurations — human errors).</p>
   </div><div class="callout"><strong>Reachability × Severity = Real Risk.</strong> A critical RCE firewalled from your subnet is useless. A medium bug reachable from anywhere is exploitable.</div>
 </div>
@@ -979,6 +979,7 @@ Save to ~/redteam/workspace/w2/ and serve: python3 -m http.server 8080</div>
   <div class="step-section">
     <span class="step-section-label label-goal">▸ Goal</span>
 <p>Map the attack surface of the Ubuntu server (172.24.24.23).</p>
+    <table><tr><th>Port</th><th>Service</th><th>Attack Category</th></tr><tr><td>22</td><td>SSH</td><td>Brute-force, weak keys, agent forwarding hijack</td></tr><tr><td>80/443</td><td>HTTP(S)</td><td>Web app vulns (SQLi, XSS, RCE, path traversal), CMS exploits</td></tr><tr><td>1337</td><td>Yavuzlar VulnLab</td><td>OWASP Top 10 — primary web target Weeks 4-5</td></tr><tr><td>445</td><td>Samba (SMB)</td><td>Anonymous shares, Samba CVEs, pass-the-hash</td></tr><tr><td>3306</td><td>MySQL</td><td>Default credentials, SQL injection via web app</td></tr><tr><td>8080</td><td>HTTP alt / proxy</td><td>App-specific admin panels, API endpoints</td></tr></table>
   </div>  <div class="step-section">
     <span class="step-section-label label-execute">▸ ▸ Execute</span>
 <ol><li>From W2 nmap: SSH (22), VulnLab (1337), Samba (445)</li><li>Local vectors (need shell):         <div class="code-block">find / -perm -4000 -type f 2>/dev/null      # SUID
@@ -1085,13 +1086,13 @@ Save to workspace/loot/w3/attack_surface_report.md</div>
 <div class="step-body">
   <div class="step-section">
     <span class="step-section-label label-goal">▸ Goal</span>
-<p>Configure Burp as proxy between browser and target. Install CA cert for HTTPS.</p>
+<p>Configure Burp as proxy. Use Burp's built-in Chromium browser — no FoxyProxy or CA certificate import needed.</p>
   </div>  <div class="step-section">
-    <span class="step-section-label label-execute">▸ ▸ Execute</span>
-<ol><li>Open Burp Suite: <code>burpsuite</code> → Temporary project</li><li>Confirm listener on 127.0.0.1:8080 (Proxy → Options)</li><li>Configure browser → FoxyProxy → 127.0.0.1:8080</li><li>Download Burp CA cert: http://burp → import into Firefox as trusted authority</li><li>Browse http://172.24.24.23:1337 → request pauses in Intercept tab</li></ol>
+    <span class="step-section-label label-execute">▸ Execute</span>
+<ol><li>Open Burp Suite: <code>burpsuite</code> → Temporary project</li><li>Go to <strong>Proxy → Open browser</strong> — this launches Burp's built-in Chromium, pre-configured with the proxy (127.0.0.1:8080) and already trusting Burp's CA certificate</li><li>In the Chromium window, browse to http://172.24.24.23:1337 → the request pauses in the Intercept tab</li></ol>
   </div>  <div class="step-section">
-    <span class="step-section-label label-verify">▸ ▸ Verify</span>
-<ul><li>HTTP request frozen in Intercept</li><li>Click Forward → page renders</li></ul>
+    <span class="step-section-label label-verify">▸ Verify</span>
+<ul><li>HTTP request frozen in Intercept tab</li><li>Click Forward → page renders</li><li>No certificate errors — Chromium already trusts Burp's CA</li></ul>
   </div>  <div class="step-section">
     <span class="step-section-label label-info">▸ ▸ How It Works</span>
 <div class="process-flow"><div class="flow-row"><div class="flow-node proxy">Browser</div><span class="flow-arrow">→</span><div class="flow-node proxy">Burp :8080</div><span class="flow-arrow">→</span><div class="flow-node target">VulnLab :1337</div></div></div>
@@ -1166,27 +1167,6 @@ PathTrv: ../../../../etc/passwd</div>
 </div>
 <div class="step-card">
 <div class="step-header">
-  <span class="step-num">05</span>
-  <span class="step-title">Compile Web Assessment Deliverables</span>
-  <span class="step-tag">Report</span>
-</div>
-<div class="step-body">
-  <div class="step-section">
-    <span class="step-section-label label-goal">▸ Goal</span>
-<p>Produce Web Assessment Report, Endpoint Inventory, and Attack Surface Diagram.</p>
-  </div>  <div class="step-section">
-    <span class="step-section-label label-execute">▸ ▸ Execute</span>
-<ol><li><strong>Endpoint Inventory:</strong> table of every URL, method, params, auth, test result</li><li><strong>Web Assessment Report:</strong> exec summary + findings table + detailed write-ups + remediation</li><li>Save to workspace/loot/w4/</li></ol>
-  </div>  <div class="step-section">
-    <span class="step-section-label label-context">▸ ▸ AI Report Generation</span>
-<p>Use the <code>cyberstrike</code> agent to generate an HTML report on port 8080.</p>        <div class="prompt-block">Generate an HTML report for Week 4: Web Assessment.
-Include exec summary, endpoint inventory, findings with CVSS, attack surface diagram.
-Save and serve: python3 -m http.server 8080</div>
-  </div>
-</div>
-</div>
-<div class="step-card">
-<div class="step-header">
   <span class="step-num">06</span>
   <span class="step-title">Run web-application & proxy-agent Autonomously</span>
   <span class="step-tag">CyberStrike</span>
@@ -1212,12 +1192,18 @@ Save to workspace/loot/w4/proxy_agent_findings.md</div>
   </div>  <div class="step-section">
     <span class="step-section-label label-verify">▸ ▸ Verify</span>
 <ul><li>Both agents completed</li><li>Each produced findings with evidence</li><li>At least 1 finding caught by one agent but missed by other</li></ul>
+  </div>  <div class="step-section">
+    <span class="step-section-label label-context">▸ Deliverable — Web Assessment Report</span>
+<p>Compile both agent outputs into a single <strong>Web Assessment Report</strong>: findings table (which agent found what), evidence screenshots, overlap analysis, and prioritized remediation. This is your Week 4 deliverable.</p><div class="prompt-block">Generate an HTML report for Week 4: Web Assessment.
+Include exec summary, endpoint inventory, findings from both agents,
+comparison table (web-application vs proxy-agent), and remediation plan.
+Save and serve: python3 -m http.server 8080</div>
   </div>
 </div>
 </div>
 <div class="step-card">
 <div class="step-header">
-  <span class="step-num">07</span>
+  <span class="step-num">06</span>
   <span class="step-title">Review the Proxy Tester Results</span>
   <span class="step-tag">Manual Validation</span>
 </div>
@@ -1231,28 +1217,10 @@ Save to workspace/loot/w4/proxy_agent_findings.md</div>
   </div><div class="callout warn"><strong>Critical habit —</strong> Never trust a finding without reproducing it.</div>
 </div>
 </div>
-<div class="step-card">
-<div class="step-header">
-  <span class="step-num">08</span>
-  <span class="step-title">Write the Validation SOP</span>
-  <span class="step-tag">SOP</span>
-</div>
-<div class="step-body">
-  <div class="step-section">
-    <span class="step-section-label label-goal">▸ Goal</span>
-<p>Capture the validation workflow into a reusable SOP.</p>
-  </div>  <div class="step-section">
-    <span class="step-section-label label-execute">▸ ▸ Execute</span>
-<ol><li>Structure: Receive → Replay in Burp → Compare to evidence → Document → Mark validated/disproven</li><li>Critical/High = 100% validation, Medium/Low = 80%</li><li>Save to workspace/loot/w4/validation_sop.md</li></ol>
-  </div>
-</div>
-</div>
-</div>
-
 <div class="deliver-section">
   <h3>Week 4 Deliverables</h3>
   <ul class="deliver-list">
-    <li>Web Assessment Report — manual OWASP findings, endpoint inventory, web-application vs proxy-agent autonomous comparison, and validated evidence pack</li>
+    <li>Web Assessment Report — findings from both agents with comparison table, evidence screenshots, and prioritized remediation</li>
   </ul>
 </div>
 </div>
@@ -1339,9 +1307,82 @@ C:\\> net user /domain            # confirms AD access</div>
 <div class="step-body">
   <div class="step-section">
     <span class="step-section-label label-goal">▸ Goal</span>
-<p>Build mental model of Windows authentication. NTLM = challenge-response. Kerberos = ticket-based.</p>
+<p>Build a working mental model of how Windows authentication works — so every credential-extraction technique has a foundation.</p>
   </div>  <div class="step-section">
-    <span class="step-section-label label-context">▸ ▸ Context</span>
+    <span class="step-section-label label-info">▸ NTLM — Challenge-Response Flow</span>
+    <div class="process-flow">
+      <div class="flow-label">No Central Authority — The Hash Is the Credential</div>
+      <div class="flow-row">
+        <div class="flow-node proxy small">💻 Client<br><small>jdoe</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">① NTLM_NEGOTIATE</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node target small">🖥 Server<br><small>File Server</small></div>
+      </div>
+      <span class="flow-arrow down">⬅</span>
+      <div class="flow-row">
+        <div class="flow-node proxy small">💻 Client</div>
+        <span class="flow-arrow">←</span>
+        <div class="flow-node">② NTLM_CHALLENGE<br><small>8-byte random nonce</small></div>
+        <span class="flow-arrow">←</span>
+        <div class="flow-node target small">🖥 Server</div>
+      </div>
+      <span class="flow-arrow down">→</span>
+      <div class="flow-row">
+        <div class="flow-node attacker small">💻 Client</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">③ NTLM_AUTHENTICATE</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node target small">🖥 Server</div>
+      </div>
+      <div class="flow-row" style="margin-top:6px;">
+        <div class="flow-node output small" style="border-left:3px solid var(--accent);background:var(--accent-soft);">⚡ Pass-the-Hash: if you steal the hash, you ARE the user. No password needed.</div>
+      </div>
+    </div>
+  </div>  <div class="step-section">
+    <span class="step-section-label label-info">▸ Kerberos — Ticket-Based Flow</span>
+    <div class="process-flow">
+      <div class="flow-label">KDC (on DC) Is the Central Authority. Tickets Are Your Credentials.</div>
+      <div class="flow-row">
+        <div class="flow-node proxy small">💻 Client<br><small>jdoe</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">① AS_REQ<br><small>Pre-auth</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node purple small">🏛 KDC (AS)</div>
+      </div>
+      <span class="flow-arrow down">⬅</span>
+      <div class="flow-row">
+        <div class="flow-node proxy small">💻 Client</div>
+        <span class="flow-arrow">←</span>
+        <div class="flow-node">② AS_REP<br><small>Encrypted TGT</small></div>
+        <span class="flow-arrow">←</span>
+        <div class="flow-node purple small">🏛 KDC (AS)</div>
+      </div>
+      <div class="flow-row" style="margin-top:4px;">
+        <div class="flow-node output small" style="border-left:3px solid var(--gold);background:var(--gold-soft);">🔑 Golden Ticket: forge TGT with KRBTGT hash → request TGS as ANY user.</div>
+      </div>
+      <div style="height:8px;"></div>
+      <div class="flow-row">
+        <div class="flow-node proxy small">💻 Client<br><small>+ TGT</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">③ TGS_REQ<br><small>TGT + SPN</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node purple small">🏛 KDC (TGS)</div>
+      </div>
+      <span class="flow-arrow down">⬅</span>
+      <div class="flow-row">
+        <div class="flow-node proxy small">💻 Client</div>
+        <span class="flow-arrow">←</span>
+        <div class="flow-node">④ TGS_REP<br><small>Encrypted TGS</small></div>
+        <span class="flow-arrow">←</span>
+        <div class="flow-node purple small">🏛 KDC (TGS)</div>
+      </div>
+      <div class="flow-row" style="margin-top:4px;">
+        <div class="flow-node output small" style="border-left:3px solid var(--accent);background:var(--accent-soft);">🔑 Kerberoasting: TGS encrypted with service hash → request it → crack offline.</div>
+      </div>
+    </div>
+  </div>  <div class="step-section">
+    <span class="step-section-label label-context">▸ Key Concepts</span>
 <div class="tool-grid"><div class="tool-card"><h4>NTLM</h4><p>Challenge-response. Server sends challenge → client encrypts with NTLM hash. Hash = credential (pass-the-hash). No central authority.</p></div><div class="tool-card"><h4>Kerberos</h4><p>Ticket-based. KDC on DC issues TGT → TGS. Forge TGT with KRBTGT hash = Golden Ticket. TGS encrypted with service hash → crackable (Kerberoasting).</p></div><div class="tool-card"><h4>KRBTGT</h4><p>KDC's service account. Its NTLM hash is the domain master key. Forge TGTs forever until password rotated twice.</p></div><div class="tool-card"><h4>Pass-the-Hash</h4><p>Use NTLM hash directly, no cleartext needed. Tools: Mimikatz, Impacket psexec.py, CrackMapExec.</p></div></div>
   </div>
 </div>
@@ -2063,7 +2104,7 @@ Logs every step with timestamps to pipeline.log"</div><p>Run: <code>chmod +x w9_
     <span class="step-section-label label-goal">▸ Goal</span>
 <p>Understand why a good security report is actually two reports: one for executives, one for engineers.</p>
   </div>  <div class="step-section">
-    <span class="step-section-label label-context">▸ ▸ Context</span>
+    <span class="step-section-label label-context">▸ Context</span>
 <p><strong>Executive Report:</strong> answers 'Should I care? How much budget? When?' for CISO/CEO. No jargon. <strong>Technical Report:</strong> answers 'What's broken, where, how to fix?' for engineers.</p>
   </div>
 </div>
@@ -2527,5 +2568,6 @@ Save and serve: python3 -m http.server 8080</div>
 })();
 </script>
 
+</div>
 </body>
 </html>
